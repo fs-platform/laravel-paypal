@@ -27,7 +27,7 @@ trait PaypalConfig
      */
     public function setEnvironment(string $environment = '')
     {
-        $this->environment = $environment ?: config('payeezy.environment');
+        $this->environment = $environment ?: config('paypal.environment');
     }
 
     /**
