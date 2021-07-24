@@ -53,7 +53,7 @@ trait PaypalOrder
     /**
      * @Notes:设置金额
      *
-     * @param int $amount
+     * @param int|float $amount
      * @param string $currencyCode
      * @return self
      * @throws ParamsException
@@ -61,7 +61,7 @@ trait PaypalOrder
      * @Date: 2021/5/13
      * @Time: 15:40
      */
-    public function setAmount(int $amount,string $currencyCode) : self
+    public function setAmount($amount,string $currencyCode) : self
     {
         if (empty($amount) || empty($currencyCode)) throw new ParamsException(__METHOD__.'参数异常');
 
