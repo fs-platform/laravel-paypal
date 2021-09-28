@@ -125,26 +125,26 @@ class PaypalService
 
             if ($response->statusCode == 200){
                 if ($response->result->status == 'COMPLETED'){
-
                     $result = current($response->result->purchase_units);
                     $referenceId = $result->reference_id;
 
                     return paypal_return_success('success',[
-                        'reference_id' => $referenceId
+                        'reference_id' => $referenceId,
+                        'response'     => $response
                     ]);
                 } else if ($response->result->status == 'APPROVED'){
                     return $this->captureOrder($token);
                 } else{
                     return paypal_return_error('error',[
-                        'status' => $response->result->status,
+                        'status'   => $response->result->status,
+                        'response' => $response
                     ]);
                 }
             }
 
-            Log::channel(config('paypal.channel') ?: 'paypal')
-                ->emergency('状态 response 数据异常:'.json_encode($response->result, JSON_PRETTY_PRINT));
-
-            return paypal_return_error('error');
+            return paypal_return_error('error',[
+                'response' => $response
+            ]);
         }catch (\Exception $exception){
             Log::channel(config('paypal.channel') ?: 'paypal')
                 ->emergency('状态异常:'.$exception->getMessage());
@@ -179,19 +179,20 @@ class PaypalService
                     $referenceId = $result->reference_id;
 
                     return paypal_return_success('success',[
-                        'reference_id' => $referenceId
+                        'reference_id' => $referenceId,
+                        'response'     => $response
                     ]);
                 } else {
                     return paypal_return_error('error',[
-                        'status' => $response->result->status
+                        'status'   => $response->result->status,
+                        'response' => $response
                     ]);
                 }
             }
 
-            Log::channel(config('paypal.channel') ?: 'paypal')
-                ->emergency('捕获 response 数据异常:'.json_encode($response->result, JSON_PRETTY_PRINT));
-
-            return paypal_return_error('error');
+            return paypal_return_error('error',[
+                'response' => $response
+            ]);
         }catch (\Exception $exception){
             Log::channel(config('paypal.channel') ?: 'paypal')
                 ->emergency('捕获异常:'.$exception->getMessage());
