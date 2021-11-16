@@ -37,6 +37,7 @@ class PaypalService
             "intent" => "CAPTURE",
             "purchase_units" => [[
                 "reference_id" => $this->parameters['referenceId'],
+                "invoice_id"   => $this->parameters['referenceId'],
                 "amount" => [
                     "value"         => (string) $this->parameters['amount']['amount'],
                     "currency_code" => $this->parameters['amount']['currencyCode']
