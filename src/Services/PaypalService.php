@@ -45,7 +45,10 @@ class PaypalService
             ]],
             "application_context" => [
                 "cancel_url" => $this->config['cancel_url'],
-                "return_url" => $this->config['return_url']
+                "return_url" => $this->config['return_url'],
+                "payment_method" => [
+                    "payee_preferred" => "IMMEDIATE_PAYMENT_REQUIRED"
+                ]
             ]
         ];
     }
